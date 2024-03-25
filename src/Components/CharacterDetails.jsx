@@ -5,7 +5,7 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import toast from "react-hot-toast";
 import LoadingSpinner from "./Loading/Loading";
 
-const CharacterDetails = ({ selectedCharacterId }) => {
+const CharacterDetails = ({ selectedCharacterId, setEpisodes }) => {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -18,6 +18,17 @@ const CharacterDetails = ({ selectedCharacterId }) => {
         );
         setCharacter(data);
         setIsLoading(false);
+
+        console.log("aidin", data);
+
+        const episodesId = data.episode.map((ep) => ep.split("/").at(-1));
+
+        const { data: episodesData } = await axios.get(
+          `https://rickandmortyapi.com/api/location/${episodesId}`
+        );
+
+        console.log("ali", [episodesData]);
+        setEpisodes([episodesData].flat().slice(0, 5));
       } catch (error) {
         setIsLoading(true);
         toast.error(error.response.data.error);
@@ -30,7 +41,6 @@ const CharacterDetails = ({ selectedCharacterId }) => {
   }, [selectedCharacterId]);
 
   if (isLoading) {
-    console.log("loading...");
     return (
       <div className="row w-100 mt-3   justify-content-center align-items-center">
         <LoadingSpinner />
@@ -40,7 +50,6 @@ const CharacterDetails = ({ selectedCharacterId }) => {
 
   // important Block
   if (selectedCharacterId === null || character === null) {
-    console.log("id is Null");
     return;
   }
 

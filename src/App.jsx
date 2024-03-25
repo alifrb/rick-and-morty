@@ -5,12 +5,14 @@ import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CharacterDetails from "./Components/CharacterDetails.jsx";
+import EpisodesList from "./Components/EpisodesList.jsx";
 
 function App() {
   const [charcters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedCharacterId, setSelectedCharacterId] = useState(null);
+  const [episodes, setEpisodes] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -52,7 +54,14 @@ function App() {
             />
           </div>
           <div className="col-12 col-sm-7">
-            <CharacterDetails selectedCharacterId={selectedCharacterId} />
+            <CharacterDetails
+              selectedCharacterId={selectedCharacterId}
+              setEpisodes={setEpisodes}
+            />
+            <EpisodesList
+              selectedCharacterId={selectedCharacterId}
+              episodes={episodes}
+            />
           </div>
         </div>
       </div>
