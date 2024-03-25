@@ -7,7 +7,7 @@ const EpisodesList = ({ episodes, selectedCharacterId }) => {
 
   if (selectedCharacterId === null || episodes === null) {
     return;
-  }  
+  }
 
   return (
     <div className="row w-100 episodes-list-section">
@@ -27,6 +27,8 @@ const EpisodesList = ({ episodes, selectedCharacterId }) => {
 };
 
 export default EpisodesList;
+
+//
 
 const Episode = ({ episode }) => {
   return (
